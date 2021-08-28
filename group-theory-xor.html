@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Probabilistic Ways to Represent the Lifetime of an Object</title>
+<link rel="stylesheet" href="style.css">
+<img src="imgs/tmc_text.jpg" alt="The Math Citadel" width="252" height="122"
+class="center"/>
+<br>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">About 
+        <i class="fa fa-caret-down"></i>
+        </button>
+    <div class="dropdown-content">
+        <a href="about.html">About Us</a>
+        <a href="people.html">People</a>
+    </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Products and Services
+         <i class="fa fa-caret-down"></i>
+         </button>
+    <div class="dropdown-content">
+        <a href="research.html">Research</a>
+        <a href="consulting.html">Consulting</a>
+        <a href="https://shop.spreadshirt.com/mathcitadel/">Shop</a>
+        <a href="https://patreon.com/mathcitadel">Patreon</a>
+    </div>
+    </div>
+    <a href="projects.html">Projects</a>
+    <a href="pubs.html">Papers/Articles</a>
+    <a href="contact.html">Contact</a>
+
+
+    
+</div>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<h2>Group Theory, XOR, and Binary Codes: Introducing Coding Theory </h2>
+<h4> R. Traylor </h4>
+<style>
+
+img{
+
+display: block;
+
+margin-left: auto;
+
+margin-right: auto;
+
+}
+
+</style>
+
+<br>
+
+<em> This article gives an introduction to coding theory by looking at the group structure of binary words under the exclusive-or operation.</em>
+
+Binary codes and bit-wise operations are fundamental in computer science. Whatever device you are running today works because of binary codes, and the bit-wise operations AND, OR, NOT, and XOR. The reader should consider proving to himself that each of these rules is an operation. If you need a refresher, check out <a href = "concatenation-operation.html">this post</a>.) We can also look at binary codes and the bit-wise operations in a more algebraic way.
+
+The <a href = "concatenation-operation.html">previous post</a> discussed operations on sets and explored concatenation as an example. Here, we will build on this and look at a set $G$ combined with an operation $\ast$ that satisfies three axioms. This operation/set combination is a special algebraic object called a <b>group</b>. We'll look at binary codes with the XOR operation to illustrate. <a href = "mod-add-groups-integers.html">Another post</a> examines modulo arithmetic on finite groups of integers as another example of a group. 
+
+<h3>Terminology and Setup</h3>
+
+We currently (until the advent of quantum or DNA computers, or something else entirely) transmit information by coding it into binary strings - strings of 1s and 0s. We call these binary words. 100111 is a binary word, as are 001, 1, and 10110. A general binary word can have any length we want. When we send these binary words via some communication channel, we always run the risk of errors in transmission. This means we need to devise some way to detect and correct transmission errors in binary codes. One way to do this is the XOR operation.
+
+Let $\mathbf{a} = a_{1}a_{2}\ldots a_{n}$ and $\mathbf{b} = b_{1}b_{2}\ldots b_{n}$  be binary words of length $n$, where $a_{i},b_{i} \in \{0,1\}$ for $ i=1,...,n$. We define the XOR operation, which we will denote by the symbol $\oplus$, on each bit. For two bits $a_{i}, b_{i}$ in a word,
+
+$$a_{i}\oplus b_{i} = (a_{i} + b_{i}) \bmod 2$$
+
+For two words $\mathbf{a}$ and $\mathbf{b}$, the XOR operation is done bit-wise (component by component). That is,
+
+$$\mathbf{a} \oplus \mathbf{b} = (a_{1}\oplus b_{1})(a_{2}\oplus b_{2})\ldots (a_{n}\oplus b_{n})$$
+
+For example,
+
+$$110010 \oplus 110001 = 000011$$ 
+
+Notice that the result of the XOR operation shows us the positions in which $\mathbf{a}$ and $\mathbf{b}$ differ. Another way to look at it is if $\mathbf{a}$ was transmitted, and $\mathbf{b}$ was received, there was an error in the last two positions. We can call the result of XORing two binary words the <i>error pattern</i>. 
+
+<h3>Showing Binary Words with the XOR operation is a Group</h3>
+
+Now we'll look at the set of all binary words of length $n$, called $\mathbb{B}^{n}$ coupled with the operation XOR. How many binary words are there of length n? Each slot has two possibilities, 0 and 1, and there are $n$ slots, so there are $2^{n}$ words of length $n$. We call the number of elements in a set the <i>cardinality</i> of a set. So, the cardinality of the set of binary words of length $n$ is $2^{n}$. You see how quickly the number grows as $n$ grows.
+
+We want to show that this set along with the XOR operation forms an algebraic structure called a <b>group</b>. A group is one of the most basic algebraic structures we can study.
+
+<blockquote>
+(Pinter (1982)) A <b>group</b> is a set $G$ coupled with an operation $\ast$, denoted $\langle G, \ast \rangle$ that satisfies the following three axioms:
+<ul>
+<li><i>(G1: Associativity of the operation)</i> The operation $\ast$ is associative. $a\ast(b\ast c) = (a\ast b)\ast c$ for any $a,b,c \in G$.
+<li><i>(G2: Existence of an identity element)</i> There is an identity element inside the set $G$ that we will call $e$ such that for every element $g \in G$, $e\ast g = g\ast e =g$
+<li><i>(G3: Existence of an inverse for every element)</i> For every element $g \in G$, there is a corresponding element $ g^{-1} \in G$ such that $g\ast g^{-1} = g^{-1}\ast g = e$
+<ul>
+</blockquote>
+
+It's important to note that a group is a set and an operation. If we change one of these, then we either have a different group, or we lose the group classification. Real numbers under addition are a group, as are nonzero real numbers under multiplication, but those are two different groups. Integers under addition are also a group, but a different group than real numbers under addition.
+
+Let's prove $\langle\mathbb{B}^{n}, \oplus \rangle$ is a group. Showing a set and operation is a group is pretty algorithmic, in a sense. We just have to show that all three axioms are satisfied.
+
+<ul>
+<li><i>(G1): Associativity</i>. This one will be a bit tedious. We have to show associativity for words of any length $n$. Since XOR of words is done bit wise, we can exploit that and first show associativity for binary words of length 1, then "scale it up", if you will. In this case, for words of length 1, we just have to brute-force it. We have to show that for any $a,b,c \in \mathbb{B}^{1}$, that
+
+$$(a\oplus b) \oplus c = a \oplus (b \oplus c)$$
+
+So,
+$$\begin{equation*}\begin{aligned} 1\oplus (1\oplus 1) = 1 \oplus 0 = 1 &\text{ and } (1 \oplus 1) \oplus 1 = 0 \oplus 1 = 1\\ 1\oplus (1 \oplus 0) = 1\oplus 1 = 0 &\text{ and } (1\oplus 1) \oplus 0 = 0 \oplus 0 = 0\\ &\vdots\end{aligned}\end{equation*}$$
+
+Continue in this fashion until you have tried all combinations. Now that we have that this is true for words of length 1, we just use the definition of XOR operation on words of length 1 to "scale up" to words of length $n$. Since the operation is done component-wise, and it is associative on each component, then it is associative on the whole word. We'll show this formally now.
+
+Let $\mathbb{a,b,c} \in \mathbb{B}^{n}$. So $\mathbf{a} = a_{1}a_{2}\ldots a_{n}$, $\mathbf{b} = b_{1}b_{2}\ldots b_{n}$, and $\mathbf{c} = c_{1}c_{2}\ldots c_{n}$. Then
+
+$$\begin{equation*}\begin{aligned}\mathbf{a}\oplus (\mathbf{b} \oplus \mathbf{c}) &= a_{1}a_{2}\ldots a_{n}\oplus [(b_{1}\oplus c_{1})(b_{2}\oplus c_{2})\ldots (b_{n}\oplus c_{n})]\\ &= (a_{1} \oplus (b_{1} \oplus c_{1}))(a_{2} \oplus (b_{2} \oplus c_{2}))\ldots (a_{n} \oplus (b_{n} \oplus c_{n}))\\&= ((a_{1} \oplus b_{1})\oplus c_{1})((a_{2}\oplus b_{2})\oplus c_{2})\ldots ((a_{n}\oplus b_{n})\oplus c_{n})\\&= (\mathbf{a} \oplus \mathbf{b})\oplus \mathbf{c}\end{aligned}\end{equation*}$$
+
+That third equality holds because we already showed that XOR was bit-wise associative. The last equality just recalls what it means to XOR two binary words. With that, we have shown associativity of the XOR operation.
+<li><i>(G2): Existence of an identity element.</i>
+
+When we want to show that a group has an identity element, we must actually find a candidate and show it meets the criterion. Here is (frustratingly, sometimes), where intuition and experience tend to play the biggest role. My favorite mantra in mathematic is "Make it look like something you've seen before". XOR is bitwise addition, just with a twist (add then mod out by 2). So let's start by considering the identity element for addition: 0. We're looking at binary words of length $n$, so a good candidate for our identity element $e$ would be a string of $n$ 0s. But does it fit? Any word
+
+$$\begin{equation*}\begin{aligned}a_{1}a_{2}\ldots a_{n} \oplus 000\ldots 0 &= (a_{1}\oplus 0)(a_{2} \oplus 0)\ldots (a_{n} \oplus 0)\\&= a_{1}a_{2}\ldots a_{n}.\end{aligned}\end{equation*}$$
+
+Check also that $ 0 \oplus \mathbf{a} = \mathbf{a}$, and thus our candidate is a match! Ensure the identity element commutes with any other element. You have to be able to perform the operation on the right and the left, or the candidate fails.
+<li><i>(G3): Existence of an inverse element for every element in the set.</i> 
+
+This one is a little bit trickier. We need to be able to find any generic binary word, and show that there is another binary word such that when we XOR them together, we get the sequence of all 0s. (Computer science friends are ahead on this one.) Think back to how we looked at the XOR operation as a form of error checking. If we XORed two words together, there was a 1 in every position in which they differ, and a 0 in every position in which they were identical.Therefore, we come to the interesting conclusion that every element is its own inverse! If you XOR an element with itself, you will get a sequence of 0s. With our error checking interpretation, this makes perfect sense. We know the communication line transmits perfectly if we can XOR the sent and received word and get all 0s every time. Conclusion: every element is its own inverse, and every element in the group is, well, in the group, so we have satisfied the third axiom. 
+</ul>
+
+<h3>Bonus round: showing that $\langle \mathbb{B}^{n}, \oplus \rangle$ is an abelian group</h3>
+
+Notice that we are missing one property that all of you likely take for granted in regular arithmetic: being able to add and multiply in any order you like. You take for granted that 2+3 = 3+2. This property is called commutativity, and groups with this bonus property are called <b>abelian groups</b>. Not all groups are abelian. Square matrices under matrix multiplication not abelian. We will show that $\langle \mathbb{B}^{n}, \oplus \rangle$ is an abelian group. 
+
+This actually can be done quite simply by exploiting two things we already know: modulo arithmetic and bit-wise operations. We know that XOR is basically bit wise addition modulo 2. Addition is absolutely commutative, and modding out by 2 doesn't change that, since we add in the regular fashion, then divide by 2 and take the remainder. That means that XORing binary words of length 1 is commutative. Now, since XORing is done bit-wise, which we noted while proving associativity, we can use that same reasoning again (in fact, it looks almost exactly the same), to conclude that XOR is indeed a commutative operation, and thus we have an abelian group. 
+
+<h3>Conclusion</h3>
+
+We explored the definition of a group using a common operation and set from computer science. We needed this foundation to be able to study more. The next post in the coding theory and algebra series will take an in depth look at maximum likelihood decoding. This decoding process is a way to attempt to decode and correct errors in transmission when the communication channel is noisy (and most are, somewhat).Abstract algebra is a powerful branch of mathematics that touches many more things than most of us realize. Now that we know binary words under the XOR operation is a group, we can start extending this and studying it as a structure, or skeleton, rather than focusing on the individual elements. The elements and operation are really just the drywall. The algebraic structure is the frame of beams inside. We learn a lot more by studying the structure than the covering, which is why it is important to enter that abstract realm. We will uncover similarities in strange places, and applications we didn't know were possible.
+</p>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Like Clockwork: Modulo Addition And Finite Groups Of Integers</title>
+<link rel="stylesheet" href="style.css">
+<img src="imgs/tmc_text.jpg" alt="The Math Citadel" width="252" height="122"
+class="center"/>
+<br>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">About 
+        <i class="fa fa-caret-down"></i>
+        </button>
+    <div class="dropdown-content">
+        <a href="about.html">About Us</a>
+        <a href="people.html">People</a>
+    </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Products and Services
+         <i class="fa fa-caret-down"></i>
+         </button>
+    <div class="dropdown-content">
+        <a href="research.html">Research</a>
+        <a href="consulting.html">Consulting</a>
+        <a href="https://shop.spreadshirt.com/mathcitadel/">Shop</a>
+        <a href="https://patreon.com/mathcitadel">Patreon</a>
+    </div>
+    </div>
+    <a href="projects.html">Projects</a>
+    <a href="pubs.html">Papers/Articles</a>
+    <a href="contact.html">Contact</a>
+
+
+    
+</div>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<h2>Like Clockwork: Modulo Addition And Finite Groups Of Integers</h2>
+<h4> R. Traylor </h4>
+<style>
+
+img{
+
+display: block;
+
+margin-left: auto;
+
+margin-right: auto;
+
+}
+
+</style>
+
+<br>
+
+<em> This article eases a reader into finite groups and modulo arithmetic. </em>
+
+<h3> 1. Introduction </h3>
+
+Many books on abstract algebra don’t slow down enough to really examine the examples they give. Algebra is a powerful branch of mathematics, whose influence is found all throughout mathematics, engineering, experimental design, and computer science. 
+
+<h3> Addition on the Clock </h3>
+
+<p>Most of us do modulo arithmetic more often than we think, especially if we look at an analog clock to tell time. For example, if I asked you to convert 14:00 from military time into “regular” time, you’d respond “2 pm” pretty quickly. But how did you do it?</p>
+
+<p>You got that answer because you went all the way around the clock and then had 2 remaining. This is modulo addition — in this case $\bmod 12$. </p>
+
+<p>Modulo addition is regular addition with an extra couple steps: dividing by your “base” $n$ (on a clock $n = 12$) and then grabbing the remainder. For integers $a$,$b$, and $n$, </p> 
+
+\[a \equiv b \bmod n \Leftrightarrow b-a= k\cdot n \text{ for an integer } k \]
+
+This is read as  "$a$ is equivalent to $b$ modulo $n$ if $b-a$ is an integer multiple of $n$". Another way to write this is
+
+\[a \equiv b \bmod n \Leftrightarrow b = k\cdot n + a \text{ for an integer } k\]
+
+<p>In other words, if $b$ can be expressed as a multiple of $n$ plus some extra amount $a$, then $a$ is equivalent to $b$ modulo $n$.</p>
+
+<p>Back to our clock example, obviously $2 \neq 14$, but $2\equiv 14 \bmod 12$ because</p>
+
+\[14 = 1\cdot 12 + 2\]
+
+<p>Here, our $b$, which is 14, can be expressed as an integer multiple of $12$ ($k=1$), plus some extra $a=2$, so we say that $2\equiv 14 \bmod 12$.</p>
+
+The base $n$ matters. If I changed the $n$, equivalence may no longer hold. For instance, $2$ is not equivalent to $14 \bmod 5$ because the remainder when you divide 14 by 5 is 4. 
+
+The study of these remainders gives us mathematical objects known as finite groups.
+
+<h3> The Finite Groups $\mathbb{Z}_{n}$</h3>
+
+<p>If we look at dividing any number by 12, the remainder can only be the numbers 0 – 11. Why? Well if the remainder is 12, then it’s a multiple of 12. The remainder of any integer, no matter how big it is, when dividing by $n$ has to be somewhere in the set $\{0,1,2,\ldots, n-1\}{0,1,2,…,n−1}$. </p>
+
+Let’s look at a few with $n=12$. As an exercise, verify each of these on your own:
+
+\[\begin{align*}1\equiv 13 \bmod 12 &\text{ because } 13 = 1\cdot 12 + 1 \\
+0\equiv 24 \bmod 12 &\text{ because } 24 = 2\cdot 12 + 0\\
+11\equiv 35 \bmod 12 &\text{ because } 35 = 2\cdot 12 + 11\\
+0\equiv 48 \bmod 12 &\text{ because } 48 = 4\cdot 12 + 0 \\
+3\equiv 123 \bmod 12 &\text{ because } 123 = 10\cdot 12 + 3
+\end{align*}\]
+The multiple $k$ is telling us how many times we’ve gone around the clock. So we’re always stuck on the clock, no matter how many times we go around, which means that the remainder can’t be any larger than 11, or we’ve started another cycle around the clock. The set $\{0,1,2,\ldots, n-1\}$forms an algebraic structure called a group when we pair the set with the <i>operation</i> modulo addition.
+<h4> What is a group? </h4>
+
+<p>A group is a set paired with an operation that has to have three certain properties. The operation doesn’t always have to be addition, or modulo addition, and the set doesn’t have to be integers. Operations can be addition, multiplication, function composition, or some weird one you define. But to pair an operation with a set, we have to check to make sure some rules are followed:</p>
+
+<p>The operation has to fit the formal definition; we cannot use any old rule we want. An <i>operation</i> is defined mathematically as a rule that takes any two elements in a given set $A$ and returns a unique element that is still in $A$. This means that you can’t create a rule that lets you escape the set. If my set is integers, and my rule is division, then division is not an operation on the integers because the result of $3/4$ isn’t an integer. By trying to divide 3 by 4, we left the set of integers. The uniqueness requirement ensures our rule is <i>well-defined</i>. If my rule is to take two integers $a$ and $b$ and return the number whose square is the product $ab$, then $2\cdot 8 = 16$ could return either 4 or -4. That’s not well-defined. The rule doesn’t guarantee that a unique element is returned.</p>
+
+<p>Assuming our operation really is an operation (and modulo addition on the integers is. If you don’t believe me, try to prove it for yourself.), then we can move on. We have the set (integers modulo $n$) and the operation (modulo addition). To meet the definition of a group, the set and operation must follow these three axioms:</p>
+
+<ol>
+<li>The operation is <i>associative</i>, meaning that the grouping or order shouldn’t matter when I go to execute the operation on 3 elements. 
+\[[(a+b) + c] \bmod n \equiv [a + (b+c)]\bmod n.\]</li>
+<li>There is an <i>identity element</i> in my set. There has to be some element in my set such that performing the operation (in this case, modulo $n$) on any other element in the set return that other element, and the order doesn’t matter. For our set of integers under modulo addition, the identity element is $0$.</li>
+<li>Every element in the set has to have an <i>inverse</i>. For every element in my group, there has to be another element such that performing the operation on the element and its proposed inverse in any order returns the identity element we talked about in (2).</li>
+</ol>
+
+We have a special way of writing the set of the integers modulo $n$: $\mathbb{Z}_{n} = \{0,1,\ldots,n-1\}$. We’ll do a specific example and verify that $\mathbb{Z}_{3}$ is a group.
+
+<h4> $\mathbb{Z}_{3}$ </h4>
+
+<p>We can examine groups via operation tables, which are a nice visual. Think of your multiplication tables from primary school. The elements are placed on the rows and columns, and the entries are the result of applying the operation to the two elements. The row entry goes first, then the column entry. For $\mathbb{Z}_{3}$, we know the elements are $\{0,1,2\}$, so the operation table looks like this:</p>
+
+\[\begin{array}{c|ccc}
++ & 0 & 1 & 2 \\
+\hline
+0 & 0 & 1 & 2 \\
+1 & 1 & 2 & 0 \\
+2 & 2 & 0 & 1
+\end{array}
+\]
+
+Since all integers modulo 3 will leave a remainder of 0, 1, or 2, these are the only three numbers we need to consider. All integers will be equivalent to one of these three. 
+</html>

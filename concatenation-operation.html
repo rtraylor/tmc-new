@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Concatenation as an Operation</title>
+<link rel="stylesheet" href="style.css">
+<img src="imgs/tmc_text.jpg" alt="The Math Citadel" width="252" height="122"
+class="center"/>
+<br>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">About 
+        <i class="fa fa-caret-down"></i>
+        </button>
+    <div class="dropdown-content">
+        <a href="about.html">About Us</a>
+        <a href="people.html">People</a>
+    </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Products and Services
+         <i class="fa fa-caret-down"></i>
+         </button>
+    <div class="dropdown-content">
+        <a href="research.html">Research</a>
+        <a href="consulting.html">Consulting</a>
+        <a href="https://shop.spreadshirt.com/mathcitadel/">Shop</a>
+        <a href="https://patreon.com/mathcitadel">Patreon</a>
+    </div>
+    </div>
+    <a href="projects.html">Projects</a>
+    <a href="pubs.html">Papers/Articles</a>
+    <a href="contact.html">Contact</a>
+
+
+    
+</div>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<h2> Probabilistic Ways to Represent the Lifetime of an Object </h2>
+<h4> R. Traylor </h4>
+<style>
+
+img{
+
+display: block;
+
+margin-left: auto;
+
+margin-right: auto;
+
+}
+
+</style>
+
+<br>
+
+<em> This article explores the definition of an operation using the familiar notion of concatenation. </em>
+
+Mathematics is like any activity, sport, or skill: it must be honed and practiced. With that in mind, I have been bolstering up my abilities in algebra with a fantastic book A Book of Abstract Algebra, by Charles C. Pinter.  I discussed operators <a href="mod-add-groups-integers.html">here</a>, but will revisit the topic.
+
+<h3> What is an operation? </h3>
+
+<blockquote>
+<b><i>Definition (operation)</i></b>: An <i> operation on a given set $A$, often denoted $\ast$ is a rule which assigns a pair of elements $(a,b) \in A$ to <b>exactly one</b> element $c = a \ast b \in A$. 
+</blockquote>
+
+Pinter stresses several things about this definition that should not be skimmed quickly.. First, $a\ast b$ has to be defined for every single pair of elements in the set $A$. Some obvious examples include multiplication on integers, or addition on real numbers. A rule that tries to sneak by but is not an operation is division on the real numbers, because a real number divided by 0 is not defined. (This is why it's not entirely correct to say that division is the inverse operation of multiplication. Division isn't an operation on the set of real numbers, unless you restrict the space to exclude 0). Secondly, the rule sends a pair of elements to exactly one element. Mathematically, this means a rule must be well defined to be an operation. It can't take the same pair of elements and get two possible answers. Lastly, a rule must be closed to be an operation. Whatever $(a,b)$ gets mapped to must also be in the set $A$. Here again, addition of real numbers is closed. Adding two real numbers yields a real number. Division also becomes our counterexample, but let's look at division on the space of just integers. Dividing 2 by 3 is certainly defined, but the result is not an integer; it's a rational number.
+
+<h3>On to Concatenation</h3>
+
+Operations are not just defined on numbers, and they don't necessarily have to just be your standard arithmetic examples (addition, subtraction, multiplication). We can define operations on any space we want, provided we satisfy the definition. Here we will discuss concatenation as an operation on the space of sequences of symbols. If you're a programmer, you probably assume we're looking at binary sequences, but we concatenate English words too. We just call these compound words, like "lifetime" or "backbone". Let's call $A$ the alphabet. If we are living in binary, then $A = \{0,1\}$. If we are speaking of English letters, the alphabet is $A = \{a,b,c,\ldots,z\}$. Now we can call $A^{\ast}$ the set of all sequences of symbols in the alphabet $A$. I didn't specify a length here. So if we are in binary, 00, 01011, and 1 are in the set of sequences of symbols built from the binary alphabet. 
+
+Now we will define an operation on $A^{*}$: concatenation. 
+
+If $a$ and $b$ are two sequences in $A^{*}$, where $\mathbf{a} = a_{1}a_{2}\ldots a_{n}$, and $\mathbf{b} = b_{1}b_{2},\ldots b_{m}$ (and each $a_{i}, b_{i}$ are drawn from the alphabet), then the concatenation of a  and b is given by
+
+$$\mathbf{ab} = a_{1}a_{2}\ldots a_{n}b_{1}b_{2}\ldots b_{m}$$
+
+That is, just stick $b$ to the end of $a$. If we live in binary, then for $\mathbf{a} = 1010$ and $\mathbf{b} = 001$, then
+
+$$\mathbf{ab} = 1010001$$
+
+Let's also note that there is an empty sequence or NULL sequence $\lambda$ that consists of nothing at all. It's pretty easy to check that concatenation meets the definition of an operation. Pinter asks us to do three simple things here:
+
+<ol>
+<li> <b>Prove that the operation defined above is associative.</b> Associativity is the property of an operation that allows us to group however we like. Addition is associative:
+$$(1+2) + 3 = 1+ (2+3)$$
+
+In general, to show associativity of an operation, we need to show that for $\mathbf{a,b,c} \in A^{*}$,
+
+$$(\mathbf{ab})\mathbf{c} = \mathbf{a}(\mathbf{bc})$$
+
+First, we will define three generic sequences in our $A^{*}$. Let
+
+$$\begin{equation*}\begin{aligned}\mathbf{a} &= a_{1}a_{2}\ldots a_{m}\\\mathbf{b} &=b_{1}b_{2}\ldots b_{n}\\\mathbf{c} &= c_{1}c_{2}\ldots c_{p}\end{aligned}\end{equation*}$$
+
+Notice here that I did not specify an alphabet, and that the length of $\mathbf{a,b}$ and $\mathbf{c}$ are different. We need to keep this as general as possible to prove the statement. Every restriction we place (same length, specific alphabet, etc) weakens the argument. Now we will show associativity formally:
+
+$$\begin{equation*}\begin{aligned}(\mathbf{ab})\mathbf{c}&=(a_{1}a_{2}\ldots a_{m}b_{1}b_{2}\ldots b_{n})c_{1}c_{2}\ldots c_{p}\\&= a_{1}a_{2}\ldots a_{m}b_{1}b_{2}\ldots b_{n}c_{1}c_{2}\ldots c_{p}\end{aligned}\end{equation*}$$
+
+Here we can see that we can put parentheses any way we want to, and it doesn't affect the end word. That is,
+
+$$\begin{equation*}\begin{aligned}(\mathbf{ab})\mathbf{c}&=(a_{1}a_{2}\ldots a_{m}b_{1}b_{2}\ldots b_{n})c_{1}c_{2}\ldots c_{p}\\&= a_{1}a_{2}\ldots a_{m}b_{1}b_{2}\ldots b_{n}c_{1}c_{2}\ldots c_{p}\\&=a_{1}a_{2}\ldots a_{m}(b_{1}b_{2}\ldots b_{n}c_{1}c_{2}\ldots c_{p})\\&=\mathbf{a}(\mathbf{bc})\end{aligned}\end{equation*}$$
+
+So we've concluded that the grouping in which you perform the operation on several elements doesn't matter, and thus we have concluded that concatenation is associative.
+
+<li><b> Explain why the operation is not commutative.</b> A commutative operation is an operation where the order of the elements in the operation doesn't matter. That is, for an operation $\ast$, $a\ast b = b\ast a$. Examples of commutative operations are addition and multiplication on real numbers ( 2+5 = 5+2). An example of a noncommutative operation is matrix multiplication. In general, the order in which you multiply matrices matters. As an explicit illustration,
+
+$$\begin{bmatrix}1&2\\1&1\end{bmatrix}\begin{bmatrix}1& 1\\ 1 & 2\end{bmatrix} =\begin{bmatrix} 3 & 5 \\ 2 & 3\end{bmatrix}\neq \begin{bmatrix}2 & 3\\3 & 4\end{bmatrix}=\begin{bmatrix}1& 1\\ 1 & 2\end{bmatrix}\begin{bmatrix}1&2\\1&1\end{bmatrix}$$
+
+We can see now why concatenation is not commutative. If you append $\mathbf{b}$ to $\mathbf{a}$, you will definitely not get the same result as appending $\mathbf{a}$ to $\mathbf{b}$.  "Townhome" and "hometown" are certainly two different words, but the two pieces: "home" and "town" are the same. Switching the order of concatenation gave a different result. Since I have produced a single counter example, concatenation cannot be commutative in general.
+
+<li><b> Prove there is an identity element for this operation.</b> An identity element is an element that lives in $A^{*}$ that, when applied via the operation in question to any other element in the set, in any order, returns that other element. Formally, $\mathbf{e} \in A^{*}$ is an identity element for operation $\ast$ if and only if $\mathbf{ea} = \mathbf{ae} = \mathbf{a}$ for every single element in $\mathbf{A^{*}}$. 
+
+The identity element for regular addition on the real numbers is 0. $0 + x = x + 0 = x$ for any real number $x$ The identity element for multiplication on the real numbers is 1. For concatenation, we seek an element that, when concatenated with any other element, in any order, returns that element. Proving existence has several strategies. The simplest one (in theory) is to find a candidate element, and show it meets the criteria. Since concatenation involves essentially "compounding" two things together, the only way we could keep an element "unchanged" is to concatenate nothing to it. 
+
+The NULL element $\lambda$ (which is certainly a word, just a NULL word. Computer scientists are very familiar with this concept) fits our bill here. If you take nothing and concatenate a word to it, you get that word. Conversely, concatenating nothing to a given word doesn't change the word. So the NULL element is our identity element. 
+
+<h3>Conclusion</h3>
+
+Operations and rules aren't equivalent. A rule is anything we make up for some purpose, but an operation has to meet specific criteria. Operations are not restricted to just the space of numbers that we deal with every day; we can look at spaces of objects, matrices, functions, words, sequences...anything we like. In addition, we can define operations, as long as we satisfy the definition. This represents the power of abstract algebra: we can take structure we thought only belongs to a very restrictive space (like numbers, or even matrices), and look at other things, like concatenation, in a different light.
+</p>
+</body>
+</html>

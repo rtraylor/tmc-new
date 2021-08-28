@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Interventions, not Anomalies</title>
+<link rel="stylesheet" href="style.css">
+<img src="imgs/tmc_text.jpg" alt="The Math Citadel" width="252" height="122"
+class="center"/>
+<br>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">About 
+        <i class="fa fa-caret-down"></i>
+        </button>
+    <div class="dropdown-content">
+        <a href="about.html">About Us</a>
+        <a href="people.html">People</a>
+    </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Products and Services
+         <i class="fa fa-caret-down"></i>
+         </button>
+    <div class="dropdown-content">
+        <a href="research.html">Research</a>
+        <a href="consulting.html">Consulting</a>
+        <a href="https://shop.spreadshirt.com/mathcitadel/">Shop</a>
+        <a href="https://patreon.com/mathcitadel">Patreon</a>
+    </div>
+    </div>
+    <a href="projects.html">Projects</a>
+    <a href="pubs.html">Papers/Articles</a>
+    <a href="contact.html">Contact</a>
+
+
+    
+</div>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<h2> Interventions, not Anomalies </h2>
+<h4> R. Traylor </h4>
+<style>
+
+img{
+
+display: block;
+
+margin-left: auto;
+
+margin-right: auto;
+
+}
+
+</style>
+
+<br>
+
+<em> This article gives a suggestion for dealing with time series anomalies.</em>
+<p>
+Anomaly Detection is becoming almost universally considered a “hot topic” across industries and business fields. A venture capitalist wants to know if a potential investment is an anomaly that will make billions at the time of IPO. A credit card company wants to know if a particular transaction is anomalous, as it could be potentially fraudulent. A systems administrator wants to know if the latency on his storage system is unique to him, or widespread through out the network. A logistics manager wants to know if the recent influx of orders to his warehouse is unusual and/or permanent. In each of these cases, they are all implicitly asking the same question:
+</p>
+<b>Is my current observation abnormal?</b>
+<p>
+Before we discuss how to detect anomalies/abnormalities/outliers, the term must be defined. What is an anomaly? The brutal secret is that there is no rigid (i.e. mathematical) definition of an anomaly. (See the previous discussion <a href="defining-an-anomaly.html">here</a>).  Some attempts at a definition are
+</p>
+
+<blockquote>
+“An outlying observation, or “outlier,” is one that appears to deviate markedly from other members of the sample in which it occurs.” [1]
+</blockquote>
+
+<blockquote>
+ An outlier is an observation that is far removed from the rest of the observations. [2]
+</blockquote>
+
+<blockquote>
+Anything that lies outside the median $\pm$ 1.5IQR
+<\blockquote>
+
+<p>
+In all of these cases, these statements are all relative to some definition of “typical” or “normal”, and defining an outlier to lie “too far” according to some distance metric away from it. Many debates focus on exactly which metric to use, depending on the type of data ($L^{2}$ norm, absolute distance away from the median, more than three standard deviations away from the mean, etc), but the crux of the issue is sidestepped.
+</p>
+<p>
+In order to define an anomaly, one must define “normal”, and then decide how much variability in “normal” is tolerable. There are two stages of subjectivity at play here:
+</p>
+
+<ul>
+<li>The definition of “normal” </li>
+<li>How much variability is acceptable </li>
+</ul>
+
+<p>
+These two items must be decided before a definition of an anomaly is attempted, which means the resulting definition of an anomaly has a shaky foundation at best. That is, the working definition of an anomaly is relative, and relative to moving targets.  Subjectivity has no place in mathematics, for the applications of the vague mathematics are weak and prone to misuse and abuse.
+</p>
+
+<p>
+There are occasions when the definition of an anomaly using the above two steps can be made clear. These occasions are rare, but should be noted. These circumstances typically show up in rigid, well-defined environments, like manufacturing, or engineering/physics laws. Manufacturing specifications define “normal” clearly and unambiguously, like the location of a hole in sheet metal.  Laws of physics are immutable, and not dependent on judgment or subjective interpretation. The laws of motion define how a “macro” object behaves (I hear you, quantum physicists), regardless of the object. We know where both a bowling ball and a golf ball are going to land given their initial position and velocity on Earth.
+</p>
+<p>
+Acceptable variability is also clearly defined in both of these cases. In manufacturing, a design engineer specifies an acceptable tolerance for deviation of the hole’s location. In the case of observing physical laws, the variability comes from measurement error, and is given by the accuracy of the measurement tool.
+</p>
+
+<p>
+ In the vast majority of business use cases for “anomaly detection”, measurements are not being taken according to a known model. Most of the time, the mathematical model that governs the data is unknown, and this complicates matters before we can try to detect anomalies (whatever we mean by that) in the dataset. Thus, we cannot extend the principles used in manufacturing and physics to the uncertainty of data science.
+</p>
+
+<h3>Intervention vs. Anomalies</h3>
+
+<p>
+The data science world requires a different approach that encompasses the inherent uncertainty involved in modeling behavior in the first place, let alone determining “excessive” deviations from it. There is no universal approach that will work for every type of data, so we will choose to focus on time series. However, the concept should be considered in generalizations to other data types. In time series, we look at <i>intervention analysis</i>.
+</p>
+
+<p>
+Intervention analysis is a broader, yet more rigid term that describes the study of changes to a data set. Conceptually, this term embodies the question
+
+<blockquote>Did the behavior change, and is it permanent?
+</blockquote>
+
+<p>
+When we express a desire for an “anomaly detection system”, this is the fundamental question we are asking. Typical methods used for outlier analysis, like the <a href = "https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h3.htm">Extreme Studentized Deviate</a> are only looking for “strange points” within the sequence or dataset relative to what you currently see. If a decision is to be made based on a model or a deviation from it, we would like to know what kind of deviation it is. Intervention analysis formally classifies five:
+
+<ol>
+<li><b>Level shift</b>: At a particular point, the model made a stepwise change that is permanent.</li>
+<li><b>Level shift with Lag</b>: Same as (1), but takes a few time steps to occur. This shows up in the dataset as a gradual increase to the new permanent level. </li>
+<li><b>Temporary Change</b>: The model experiences a level shift that has a decaying effect over time.</li>
+<li><b>Innovation Outlier</b>: This is the most complex type, typically is defined to represent the onset of a causal effect or a change in the model itself.</li>
+<li><b>Additive Outlier</b>: the “point outlier”. It has no effect on future behavior.</li>
+
+<p>
+For examples of each, visit <a href = "https://online.stat.psu.edu/stat510/lesson/9/9.2"><this page</a> for a good introductory description. 
+The important aspect with this approach is that a model is formally defined (for time series, ARIMA), as well as changes to that model. Thus, when we talk about a level shift, there is no ambiguity. Moreover, with formal definitions, we can classify a change according to the effect the point has on the future points.
+</p>
+
+<h3>Proposed Strategy</h3>
+<p>
+Detecting innovations in practice is difficult; this post is not meant to diminish this. Creating a model from data without much prior knowledge of the behavior of the data is also difficult, as these interventions can have adverse effects on building the model in the first place. That is, if a level shift is present in the data at a certain point, we may end up with a different initial model that doesn’t notice the level shift, because it got built into the model as if it were normal, simply because we didn’t know any better. There are estimation techniques, and some papers are referenced at the end for those interested. Here we are interested in an overall strategy to consider these problems in the first place.
+</p>
+<p>
+Since we must estimate the model, then attempt to identify interventions and classify them, a sensible solution is a probabilistic approach. That is, the modeling is done via some (hopefully robust) method X, and then the potential intervention points are identified via another method Y. Behind the scenes, we ultimately want to classify each point as
+</p>
+
+<ul>
+<li>nothing</li>
+<li>one of the types of interventions describes above</li>
+</ul>
+<p>
+and rank these possibilities according to the likelihood a particular point belongs in one of the 6 possibilities. The uncertainty is therefore demonstrated in a true probabilistic fashion, and a decision can be made taking into account all the possibilities for a particular intervention.
+</p>
+
+<h3>Conclusion</h3>
+In order to identify and solve business problems effectively, the terms must be rigidly defined. By looking at intervention analysis, we can approach very difficult problems with a more solid foundation, since the model and the interventions/outliers have unambiguous, formal definitions. Moreover, a “big picture” strategy for employment should be probabilistic, rather than threshold or classification-based. In this way, the uncertainty can be expressed fully, which allows for more informed decision-making.
+
+<h3> References </h3>
+
+<ol>
+<li>Grubbs, F. E. (February 1969). “Procedures for detecting outlying observations in samples”. <i>Technometrics<i>. 11 (1): 1–21. doi:10.1080/00401706.1969.10490657. </li>
+<li>Maddala, G. S. (1992). “Outliers”. Introduction to Econometrics (2nd ed.). New York: MacMillan. pp. 88–96 [p. 89]. ISBN 0-02-374545-2.</li>
+<li>Chung Chen and Lon-Mu Liu. Joint Estimation of Model Parameters and Outlier Effects in Time Series. Journal of the American Statistical Association Vol. 88 , Iss. 421,1993</li>
+</body>
+</html>

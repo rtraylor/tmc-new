@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Rigor of Fuzzy Sets</title>
+<link rel="stylesheet" href="style.css">
+<img src="imgs/tmc_text.jpg" alt="The Math Citadel" width="252" height="122"
+class="center"/>
+<br>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">About 
+        <i class="fa fa-caret-down"></i>
+        </button>
+    <div class="dropdown-content">
+        <a href="about.html">About Us</a>
+        <a href="people.html">People</a>
+    </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Products and Services
+         <i class="fa fa-caret-down"></i>
+         </button>
+    <div class="dropdown-content">
+        <a href="research.html">Research</a>
+        <a href="consulting.html">Consulting</a>
+        <a href="https://shop.spreadshirt.com/mathcitadel/">Shop</a>
+        <a href="https://patreon.com/mathcitadel">Patreon</a>
+    </div>
+    </div>
+    <a href="projects.html">Projects</a>
+    <a href="pubs.html">Papers/Articles</a>
+    <a href="contact.html">Contact</a>
+
+
+    
+</div>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<h2>The Rigor of Fuzzy Sets </h2>
+
+<h4> R. Traylor </h4>
+
+<div> 
+
+<em> This article gives a casual overview of fuzzy sets with examples. </em>
+
+</div>
+
+<br>
+
+<h3> 1. Introduction </h3>
+
+<p> Perhaps "fuzzy set theory", "fuzzy arithmetic", and "fuzzy rules" could have been named something a bit less mock-worthy. The word "fuzzy" has English synonyms "blurred", "unfocused", and the worst "ill-defined". However, fuzzy set theory is anything but fuzzy. Maybe cuddly and fun, but certainly not ill-defined. We’ll take a look in this post at what exactly fuzzy sets are. Fuzzy set theory is an extension of classical set theory, so we’ll first take a look at the basics of a classical set.
+
+<h3> 2. Classical Set </h3>
+
+A classical set is one we all deal with explicitly on a daily basis, even if we don’t use that terminology. An item or element is either a member of a classical set, or it is not. Examples are
+
+<ul>
+<li>Even numbers</li>
+<li> a list of members of a particular social group </li>
+<li>Wavelengths that are classified as UV light</li>
+</li>The set of perfect squares</li>
+
+If we take an element in the relevant universe for each example, we are faced with the binary decision of whether or not it is a member of the set. 3 is not an even number, but 4 is. You either are on the list or you're not. The electromagnetic spectrum is a continuum, but the cutoffs are strict. A wavelength between 10nm and 400 nm is ultraviolent. Any wavelength less than 10nm or greater than 400 nm is not. Finally, a the square of a rational number cannot be a perfect square, because a rational number is not a natural number. 3 is a natural number, but there is no natural number whose square gives 3.
+
+For all of these sets, we can define a characteristic function of a set $A$ (denoted $\chi_{A}(x)$) that takes an input and returns a 1 if the input is an element of the set $A$ and 0 if it is not. Mathematically, we write
+
+$$\chi_{A}(x) = \left\{ \begin{array}{lr} 1, & x \in A \\ 0, &x \notin A \end{array}\right.$$	
+ 
+For example, if we take the even numbers $A = 2\mathbb{Z}$, then $\chi_{A}(3) = 0$, and $\chi_{A}(4) = 1$.
+
+Now, what if we relax the requirement that you either be in or out? Here or there? Yes or no? What if I allow “shades of grey”? Then we extend classical sets to <i>fuzzy sets</I>.
+
+<h3> 3. Partial Membership is Well-Defined </h3>
+
+Many things we encounter daily aren’t strict or crisp as is used in mathematics. Someone might tell you that you can either be in or out of a room, but what if you stand with one foot on either side of the threshold? It doesn’t make sense to then say you are neither in nor out, because part of you is certainly inside the room. You can’t “pick one”, because the whole you is not wholly in either place all at once.
+
+Fuzzy sets allow for partial membership in a set. That is, you can be “a little bit” in the room (perhaps a toe is sticking in), “halfway” in the room (straddling the threshold), “most of the way” in the room (only a foot sticking out of the room), and everything in between. We formally define this notion by extending the characteristic function $\chi_{A}(x)$ to include the possibility of fractional membership.
+
+The membership function of a fuzzy set $A$ (denoted $\mu_{A}(x)$) takes an element $x$ in a universe $X$ and maps it somewhere in the interval $[0,1]$ according to the level of membership it has in the set $A$. That is,
+
+\[\mu_{A}(x): X \to [0,1]\]
+
+<p><b> Example </b><p>
+
+Fuzzy sets can be implemented in engineering design. Suppose an engineer is designing a pressurized air tank. There are many different variables that can affect the design, as well as performance requirements. The performance variables might include the mass of the tank, capacity, and such restrictions as height or radius. Instead of specifying a particular value for the mass of the tank, the engineer can solicit preferences from the customer, perhaps by survey, offering a range of possible mass for the tank. Given these responses, he can construct a fuzzy number to represent the customer preference. Suppose he gets the following function for the customer preference for the mass, measured in kilograms:
+\[\mu_{m}(x) = 1-\frac{1}{200}x, x \in [0,200]\]
+We can use this fuzzy set to determine the customer's preference level for a given possible mass. Notice that the mass cannot be negative, and the level of membership cannot be below 0. The customer's highest preference is for the tank to weigh nothing (of course), and he assigns a preference of 1/2 to a mass of 100 kg. His preference for the mass of the tank drops linearly from 0 and he will not accept any mass over 200 kg. This gives the designer some leeway as he optimizes for cost, manufacturing ease, and other necessary considerations besides just this one customer preference.
+
+<h4>3.1 Level Sets </h4>
+
+We can also look at fuzzy sets in terms of their <i>level sets</i>, as a way to “backsolve” to determine what values of $x$ are at least an $\alpha$ level of membership in the set, where $0\leq \alpha\leq 1$ Denoted $A_{\alpha}$, we define the $\alpha$-level set as
+
+\[A_{\alpha} = \{x \in X : \mu_{A}(x) \geq \alpha\}\]
+
+For example, if we return to the customer design preference above, the engineer may want to know what the customer is "at least 75% happy with". Then we use the membership function with $\mu_{m}(x) = 0.75$ and solve for $x$. 
+
+<i>Remark: The fuzzy set given above is actually a triangle. There is a vertical line from 0 to 1 implicitly contained in there, so when we solve for $x$, we're getting the right endpoint of the level set.</i>
+
+\[0.75 = 1-\frac{x}{200}, \text{ so } x=50\]
+Thus, the interval $[0,50]$ is the 0.75-level set. If the engineer keeps the mass below 50 kg, then he can be sure the customer will be at least 75% satisfied with that design choice. Some special level sets are the $A_{1}$, called the <i>core</i>, and $A_{0}$, called the <i>support</i>. The core tells us the interval that represents full membership, and the support tells us how “wide” the entire fuzzy set actually is.
+
+Now that we understand what fuzzy sets are, let’s look at doing some things with them.
+
+<h3>4. Fuzzy Set Operations </h3>
+
+We’re going to dive a little further into fuzzy set theory and discuss operations on fuzzy sets such as union, intersection, and complementation. Since the fuzzy set is a nice extension of the classical set, the definitions of union, intersection, and complementation actually remain the same for fuzzy sets as for classical sets. The only difference is that the result is a fuzzy set rather than a classical set. We’ll discuss each one in turn.
+
+<h4> 4.1 Union </h4>
+
+<p>The union is represented by the phrase “or”– that is, given two sets $A$ and $B$, an element is a member of the union of $A$ and $B$ if it is in either $A$ or $B$. </p>
+
+<i> Remark: OR should not be confused with XOR (exclusive OR). The union of two sets includes the elements that are in both sets.</i>
+
+<p>In classical set theory, the characteristic function of the union of two sets $A$ and $B$ is given by</p>
+
+\[\chi_{A \cup B}(x) = \text{max}\left(\chi_{A}(x),\chi_{B}(x)\right)\]
+
+As an example, let $A$ be the set of prime numbers, and $B$ be the set of odd numbers.
+
+\[\chi_{A \cup B}(3) = \text{max}(A(3), B(3)) = \text{max}(1,1) = 1\]
+so 3 is in $A \cup B$. 
+\[\chi_{A \cup B}(2) = \text{max}(A(2), B(2)) = \text{max}(1,0) = 1\]
+ so 2 is in  $A \cup B$
+\[\chi_{A \cup B}(4) = \text{max}(A(4), B(4)) = \text{max}(0,0) = 0\] 
+so 4 is not in  $A \cup B$.
+
+For fuzzy sets, the formula for the membership function of the union of two fuzzy sets  $A \cup B$ remains exactly the same as for the characteristic function of the union of two classical sets.
+\[\mu_{A \cup B}(x) = \max(\mu_{A}(x), \mu_{B}(x))\]
+
+Suppose the above mass preference set was just one potential customer's preference for the mass of the air tank. Suppose another customer wanting to purchase the air tank submits his preference function for the mass of the tank, given by 
+\[\mu_{m,B}(x) = \begin{cases}1, x \in [30,140]\\
+			0, x \notin [30,140]
+\end{cases} = \mathbb{I}([30,140])\]
+$\mathbb{I}([30,140])$ is called the indicator function, and takes on value 1 in the given interval, and 0 outside.
+This customer is perfectly fine with any mass between 30 and 140kg, but will not tolerate anything outside that range at all. Suppose the engineer wants to know $A \cup B$, the fuzzy set that represents the union of these fuzzy preferences. Then 
+$$\begin{align*}\mu_{A \cup B}(x) &= \max_{x}(1-\frac{x}{200}, \mathbb{I}([30,140)])) \\
+&= \begin{cases} 1-\frac{x}{200}, & x \in [0,30] \\
+1, & x \in [30,140] \\
+1-\frac{x}{200}, & x \in [140,200]
+\end{cases}
+\end{align*}
+$$
+
+<h4> 4.2 Intersection </h4>
+
+<p>The <i>intersection</i> of two sets denoted $A \cap B$ is represented in language by the word “and”– an element must be a member of both sets simultaneously to be in the intersection of two sets. For the classical set example, we’ll look again at $A$ as the set of prime numbers, and $B$ as the set of odd numbers. The membership function of the intersection of two classical sets, denoted $\chi_{A \cap B}$ is given by </p>
+
+\[\chi_{A \cap B} = \min\left(\chi_{A}(x), \chi_{B}(x)\right)\]
+
+\[\chi_{A \cap B}(3) = \min(A(3), B(3)) = \min(1,1) = 1\]
+so 3 is in $A \cap B$
+\[\chi_{A \cap B}(2) = \min(A(2), B(2)) = \min(1,0) = 0\]
+ so 2 is not in  $A \cap B$
+\[\chi_{A \cap B}(4) = \min(A(4), B(4)) = \min(0,0) = 0\]
+so 4 is not in  $A \cap B$
+Similar to the union, the membership function of the intersection of two fuzzy sets has the same formula as that for the classical counterpart.
+
+\[\mu_{A \wedge B} = \min\left(\mu_{A}(x), \mu_{B}(x)\right)\]
+
+The intersection of the two customer preference sets is 
+
+$$\begin{align*}\mu_{A \cap B}(x) &= \min(1-\frac{x}{200}, \mathbb{I}([30,140]) \\
+&=\begin{cases}0, & x \in [0,30] \\
+1-\frac{x}{200}, & x \in [30,140] \\
+0, & x \in [140,200]
+\end{cases}
+\end{align*}
+$$
+
+Thus, if the engineer wants to see what range of masses will at least partially (more than 0) satisfy both customers $A$ and $B$, he would look at the intersection and see that a mass between 30 and 140 kg will give a positive preference from both. 
+
+<h4>4.3 Complement </h4>
+
+The <i>complement</i> of a set (denoted $A^{c}$ or $\overline{A}$) is represented by the English word “not”, and indicates negation. Everything outside a given set is in the complement of a set. The membership function for the complement of a fuzzy set is identical to the characteristic function of the complement of a classical set:
+
+$$\mu_{A^{c}}(x) = 1-A(x)$$
+
+For the first customer set of preferences, the complement will tell us how strongly the customer does <b>not</b> prefer specific possible masses. 
+
+\[\mu_{A^{c}}(x) = 1-\left(1-\frac{x}{200}\right) = \frac{x}{200}\]
+
+For example, $\mu_{A}^{c}(150) = \frac{3}{4}$. One could interpret this to mean that the customer is 3/4 dissatisfied with and 1/4 satisfied with this mass in the air tank design. 
+
+<h3> Conclusion </h3>
+
+Fuzzy sets are simply an extension, or generalization of the classical sets we all implicitly knew already. A good definition, especially one that intends to extend a concept should contain the original concept as a special case. Fuzzy sets do indeed contain classical sets inside their definition. Moreover, operations on fuzzy sets should not need wholly new definitions. We saw that union, intersection, and complementation still hold for fuzzy sets just as they did before, so the theory of fuzzy sets is well defined and represents a consistent extension of classical set theory.
+</html>
